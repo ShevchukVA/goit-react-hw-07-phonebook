@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import contactOperations from '../../redux/contacts/contactOperations';
 import contactsSelector from '../../redux/contacts/contactsSelector';
 import styles from './ContactItem.module.css';
@@ -15,11 +15,16 @@ const ContactItem = ({ name, number, onRemoveContact }) => (
   </li>
 );
 
-// ContactItem.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   number: PropTypes.string.isRequired,
-//   onRemoveContact: PropTypes.func.isRequired,
-// };
+ContactItem.defaultProps = {
+  name: '',
+  number: '',
+};
+
+ContactItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+  onRemoveContact: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state, ownProps) => {
   const contact = contactsSelector.getContactsById(state, ownProps.id);

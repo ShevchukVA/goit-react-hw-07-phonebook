@@ -4,11 +4,9 @@ import contactsActions from './contactsActions';
 axios.defaults.baseURL = 'http://localhost:2000';
 
 const addContact = ({ name, number }) => (dispatch, getState) => {
-  dispatch(contactsActions.addContactRequest());
-
   if (name === '' || number === '') {
     alert('Please, enter name or number');
-    return getState;
+    return;
   }
 
   const { contacts } = getState();
@@ -19,7 +17,10 @@ const addContact = ({ name, number }) => (dispatch, getState) => {
 
   if (isExistingContact) {
     alert(`${name} is alredy in contacts`);
+    return;
   }
+
+  dispatch(contactsActions.addContactRequest());
 
   if (!isExistingContact) {
     axios

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import contactOperations from '../../redux/contacts/contactOperations';
 import styles from './ContactForm.module.css';
 
@@ -60,9 +60,9 @@ class ContactForm extends Component {
   }
 }
 
-// ContactForm.propTypes = {
-//   onAddContact: PropTypes.func.isRequired,
-// };
+ContactForm.propTypes = {
+  onAddContact: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = {
   onAddContact: contactOperations.addContact,

@@ -3,13 +3,32 @@ import contactsActions from './contactsActions';
 
 axios.defaults.baseURL = 'http://localhost:2000';
 
-const addContact = ({ name, number }) => dispatch => {
+const addContact = ({ name, number }) => (dispatch, getState) => {
   dispatch(contactsActions.addContactRequest());
 
-  axios
-    .post('/contacts', { name, number })
-    .then(({ data }) => dispatch(contactsActions.addContactSuccess(data)))
-    .catch(error => dispatch(contactsActions.addContactError(error)));
+  if (name === '' || number === '') {
+    alert('Please, enter name or number');
+    return getState;
+  }
+
+  const { contacts } = getState();
+
+  const names = contacts.items.map(contact => contact.name.toLowerCase());
+
+  const isExistingContact = names.includes(name);
+
+  if (isExistingContact) {
+    alert(`${name} is alredy in contacts`);
+  }
+
+  if (!isExistingContact) {
+    axios
+      .post('/contacts', { name, number })
+      .then(({ data }) => dispatch(contactsActions.addContactSuccess(data)))
+      .catch(error => dispatch(contactsActions.addContactError(error)));
+  } else {
+    return getState;
+  }
 };
 
 const fetchContacts = () => dispatch => {
